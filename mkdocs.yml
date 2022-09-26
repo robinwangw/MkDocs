@@ -19,7 +19,7 @@ extra:
 
 
 repo_url: https://github.com/robinwangw/MkDocs
-repo_name: Robin's Blog
+repo_name: MkDocs
 
 markdown_extensions:
   - pymdownx.highlight
