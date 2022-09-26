@@ -1,0 +1,1105 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.3">
+    
+    
+      
+        <title>信息安全合规培训 - Robin's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7a952b86.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Robin&#39;s Blog" class="md-header__button md-logo" aria-label="Robin's Blog" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robin's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息安全合规培训
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robinoneway/MkDocs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Robin's Blog
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Robin&#39;s Blog" class="md-nav__button md-logo" aria-label="Robin's Blog" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    Robin's Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robinoneway/MkDocs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Robin's Blog
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          K8S
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="K8S" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          K8S
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../K8S/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAK8S%E9%9B%86%E7%BE%A4/" class="md-nav__link">
+        从零搭建K8S集群
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          等保
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="等保" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          等保
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          信息安全合规培训
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        信息安全合规培训
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、等级保护
+  </a>
+  
+    <nav class="md-nav" aria-label="一、等级保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    等级保护的含义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    等级保护的背景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    等级保护的级别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    等级保护的目标客户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    等级保护的主管部门
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    等级保护的基本要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    等级保护的实施流程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    二、分级保护
+  </a>
+  
+    <nav class="md-nav" aria-label="二、分级保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    分级保护的含义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    分级保护的级别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    分级保护的目标客户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    分级保护主管部门
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    分级保护的标准规范
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    分级保护的具体内容
+  </a>
+  
+    <nav class="md-nav" aria-label="分级保护的具体内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    技术要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    管理要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    一票否决
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    三、资质及人员要求
+  </a>
+  
+    <nav class="md-nav" aria-label="三、资质及人员要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    等级保护业务的企业资质要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    分级保护业务的企业资质要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    等保/分保业务的人员资质要求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    相关国内国际标准
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AD%89%E7%BA%A7%E4%BF%9D%E6%8A%A4%E6%B5%8B%E8%AF%84%E9%AB%98%E9%A3%8E%E9%99%A9%E5%88%A4%E5%AE%9A%E6%8C%87%E5%BC%95/" class="md-nav__link">
+        网络安全等级保护测评高风险判定指引
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、等级保护
+  </a>
+  
+    <nav class="md-nav" aria-label="一、等级保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    等级保护的含义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    等级保护的背景
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    等级保护的级别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    等级保护的目标客户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    等级保护的主管部门
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    等级保护的基本要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    等级保护的实施流程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    二、分级保护
+  </a>
+  
+    <nav class="md-nav" aria-label="二、分级保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    分级保护的含义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    分级保护的级别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    分级保护的目标客户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    分级保护主管部门
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    分级保护的标准规范
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    分级保护的具体内容
+  </a>
+  
+    <nav class="md-nav" aria-label="分级保护的具体内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    技术要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    管理要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    一票否决
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    三、资质及人员要求
+  </a>
+  
+    <nav class="md-nav" aria-label="三、资质及人员要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    等级保护业务的企业资质要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    分级保护业务的企业资质要求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    等保/分保业务的人员资质要求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    相关国内国际标准
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/robinoneway/MkDocs/edit/master/docs/等保/信息安全合规培训.md" title="编辑此页" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+  <h1>信息安全合规培训</h1>
+
+<h2 id="_1">一、等级保护</h2>
+<h3 id="_2">等级保护的含义</h3>
+<p>信息安全等级保护是指对国家秘密信息、法人和其他组织及公民的专有信息以及公开信息和存储、传输、处理这些信息的信息系统分等级实行安全保护，对信息系统中使用的信息安全产品实行按等级管理，对信息系统中发生的信息安全事件分等级响应、处置。</p>
+<p><strong>系统重要程度有多高，安全保护就应当有多强，既不能保护不足，也不能过度保护。</strong></p>
+<ul>
+<li>遵循客观规律，信息安全的等级是客观存在（等保定级）</li>
+<li>有利于突出重点，加强安全建设和管理</li>
+<li>有利于控制信息安全建设的成本</li>
+</ul>
+<h3 id="_3">等级保护的背景</h3>
+<p>等级保护思想始于1994年发布的《中华人民共和国计算机信息系统安全保护条例》（国务院第147号令），其中明确提出了“计算机信息系统实行安全等级保护”。</p>
+<p>2007年6月，公安部、国家保密局、国家密码管理局、国务院信息化工作办公室联合发布《信息安全等级保护管理办法》，在全社会范围推行“信息安全等级保护”政策。</p>
+<p>2009年，四部委联合发布《关于推动信息安全等级保护测评体系建设和开展等级测评工作的通知》，要求2010年底前完成测评体系建设，完成30%第三级以上信息系统的测评工作。</p>
+<p><strong>等级保护工作是信息安全工作的基本制度，是国家一项基本国策，是维护国家信息安全的根本保障，是国家意志的体现，具有政策强制性。</strong></p>
+<h3 id="_4">等级保护的级别</h3>
+<p>根据《信息安全等级保护管理办法》规定的五级要求如下：</p>
+<ul>
+<li>一级：自主保护：信息系统受到破坏后，会对公民、法人和其他组织的合法权益造成损害，但不损害国家安全、社会秩序和公共利益；</li>
+<li>二级：指导保护：信息系统受到破坏后，会对公民、法人和其他组织的合法权益产生严重损害，或者对社会秩序和公共利益造成损害，但不损害国家安全；</li>
+<li>三级：监督保护：信息系统受到破坏后，会对公民、法人和其他组织的合法权益产生特别严重损害，或者对社会秩序和公共利益造成严重损害，或者对国家安全造成损害；</li>
+<li>四级：强制保护：信息系统受到破坏后，会对社会秩序和公共利益造成特别严重损害，或者对国家安全造成严重损害；</li>
+<li>五级：专控保护：信息系统受到破坏后，会对国家安全造成特别严重损害。</li>
+</ul>
+<table>     
+    <tr>         
+        <th rowspan="2">受侵害的客体</th>
+        <th colspan="3">对客体的侵害程度</th>   
+    </tr>
+    <tr>
+        <td>一般损害</td>
+        <td>严重损害</td>
+        <td>特别严重损害</td>
+    </tr>
+    <tr>         
+        <td>公民、法人和其他组织的合法权益</td>
+        <td>第一级</td>
+        <td>第二级</td>
+        <td>第二级</td>     
+    </tr>     
+    <tr>         
+        <td>社会秩序和公共利益</td>
+        <td>第二级</td>
+        <td>第三级</td>
+        <td>第四级</td>
+    </tr>     
+    <tr>         
+        <td>国家安全</td>
+        <td>第三级</td>
+        <td>第四级</td>
+        <td>第五级</td>
+    </tr> 
+</table>
+
+<h3 id="_5">等级保护的目标客户</h3>
+<ul>
+<li>一级：小型私营、个体企业、中小学、乡镇所属信息系统、县级单位中一般的信息系统。</li>
+<li>二级：县级某些单位中的重要信息系统；地市级以上国家机关、企事业单位内部一般的信息系统；如：市县级委办局、小国企、二甲医院、普通高校、普教。</li>
+<li>三级：地市级以上政府部门、企事业单位内部重要的信息系统、门户网站等；跨省、跨市或全国（省）联网运行的信息系统。如：地市级以上政府部门、金融、运营商、国企、三甲医院、部属高校、公共平台。</li>
+<li>四级：国家重要领域、重要部门中的特别重要系统。例如全国银行、电信等重要行业、部门中涉及国计民生的核心系统。如：电力生产系统、12306、银行等。</li>
+<li>五级：国家重要领域、重要部门中的极端重要系统。</li>
+</ul>
+<h3 id="_6">等级保护的主管部门</h3>
+<ul>
+<li>公安部：负责除辖区电子政务和涉密以外信息系统的等保监督、指导和检查工作；负责等级保护定级备案的是公安局网监大队；</li>
+<li>工信部：信息化领导小组办公室；负责信息安全等级保护工作的协调；</li>
+<li>保密局：负责涉密系统中等保工作监督、指导；负责对泄密事件进行查处；</li>
+<li>密码委：负责等保中的密码进行分级管理，监督指导密码配备、使用和管理；</li>
+<li>测评机构：具有测评资格的第三方测评中心；各省承接测评需在当地公安厅备案。</li>
+</ul>
+<h3 id="_7">等级保护的基本要求</h3>
+<ul>
+<li>技术要求：物理安全、网络安全、主机安全、应用安全、数据安全</li>
+<li>管理要求：安全管理机构、安全管理制度、人员安全管理、系统建设管理、系统运维管理</li>
+</ul>
+<h3 id="_8">等级保护的实施流程</h3>
+<div class="highlight"><pre><span></span><code>graph LR
+    1[系统定级] --&gt; 2[系统备案] --&gt; 3[建设整改] --&gt; 4[等级测评] --&gt; 5[监督检查]
+</code></pre></div>
+<h2 id="_9">二、分级保护</h2>
+<h3 id="_10">分级保护的含义</h3>
+<p>分级保护是国家针对涉及<strong>国家秘密信息及信息系统</strong>的一种分级别的保护措施或方法。</p>
+<p>一个计算机信息系统是否属于涉密信息系统，主要是看其系统里面的信息是否有涉及国家秘密的信息，不论其中的涉密信息是多还是少，只要是有（即存储、处理或传输了涉密信息），这个信息系统就是涉密信息系统。</p>
+<p><strong>国家秘密</strong>：关系国家的安全和利益，依照法定程序确定，在一定时间内只限一定范围的人员知悉</p>
+<p><strong>涉密信息系统</strong>：有计算机及其相关和配套设备、设施构成，按照一定的应用目标和规则存储、处理、传输国家秘密信息的系统或网络；</p>
+<p><strong>国家秘密范围</strong>：国家事务的重大决策、国防建设和武装力量活动、外交和外事活动、国民经济和社会发展、科学技术、维护国家安全活动等、其他经确定</p>
+<h3 id="_11">分级保护的级别</h3>
+<p>分级保护针对的是涉密信息系统，根据涉密信息的涉密等级，涉密信息系统的重要性，遭到破坏后对国计民生造成的危害性，以及涉密信息系统必须达到的安全保护水平划分为<strong>秘密级、机密级</strong>和<strong>绝密级</strong>三个等级</p>
+<p>三级四档：</p>
+<ul>
+<li>三级：秘密级、机密级、绝密级</li>
+<li>四档：秘密级、机密一般、机密增强、绝密级</li>
+</ul>
+<h3 id="_12">分级保护的目标客户</h3>
+<ul>
+<li>党政机关：保密局、纪委、机要局、组织部。。。</li>
+<li>公检法司：公安厅、法院、检察院、司法、监狱。。。</li>
+<li>部队军工：部队、航空航天、科研单位、军工企业。。。</li>
+</ul>
+<h3 id="_13">分级保护主管部门</h3>
+<p>部门定位与分工：</p>
+<ul>
+<li>建设单位：负责系统定密、工程监督、日常管理、涉密系统使用及测评申请等</li>
+<li>保密局：负责辖区分保工作的监督、指导；负责建设方案论证、测评任务安排、系统审批和备案</li>
+<li>密码委：负责分保中的密码进行分级管理，监督指导密码配备、加密机等设备的使用和管理</li>
+<li>测评中心：负责测评工作具体事宜及后期复查测评；国家保密科技测评中心是我国唯一的涉密信息系统安全保密测评机构</li>
+<li>集成单位：负责方案设计、系统实施、测评服务以及相关培训</li>
+</ul>
+<h3 id="_14">分级保护的标准规范</h3>
+<p>标准规范：BMB17《涉及国家秘密的信息系统分级保护技术要求》、BMB18《涉及国家秘密的信息系统工程监理规范》、BMB20《涉及国家秘密的信息系统分级保护管理规范》、BMB22《涉及国家秘密的信息系统分级保护测评指南》、BMB23《涉及国家秘密的信息系统分级保护方案设计指南》</p>
+<h3 id="_15">分级保护的具体内容</h3>
+<h5 id="_16">技术要求</h5>
+<ul>
+<li>基本要求：物理隔离、安全保密产品选型、安全域间边界防护、密级标识</li>
+<li>物理安全：环境安全、设备安全、介质安全</li>
+<li>运行安全：备份与恢复、计算机病毒与代码防护、应急响应、运行管理</li>
+<li>信息安全保密：身份鉴别、访问控制、信息加密、电磁泄漏发射防护、信息完整性校验、系统安全性能检测、安全审计、抗抵赖、操作系统安全、数据库安全、边安全防护</li>
+</ul>
+<p>秘密级信息系统：共有63条技术要求；机密级信息系统：共有79条技术要求，其中有增强要求的34条；绝密级信息系统：共有80条技术要求。</p>
+<h5 id="_17">管理要求</h5>
+<ul>
+<li>
+<p>基本管理要求：管理策略、管理机构、管理制度、管理人员</p>
+</li>
+<li>
+<p>管理内容：</p>
+</li>
+<li>
+<p>人员管理：</p>
+</li>
+<li>
+<p>内部人员管理：录用、岗位、保密协议、培训、监管、奖惩、离职离岗</p>
+</li>
+<li>
+<p>外部人员管理：保密要求知会、控制区隔离、携带物品限制、旁站陪同</p>
+</li>
+<li>
+<p>物理环境与设施管理</p>
+<ul>
+<li>
+<p>周边环境（周边监控、安防、出入控制）</p>
+</li>
+<li>
+<p>涉密场所：要害部门、部位管理，无线、多媒体产品使用，安全巡防、巡查</p>
+</li>
+<li>保障设施：定期检查检测、线路保护</li>
+</ul>
+</li>
+<li>
+<p>设备与介质管理</p>
+<ul>
+<li>采购与选型：采购管理、选型管理、证书查验、交付验收</li>
+<li>操作与使用</li>
+<li>保管与保存</li>
+<li>维修与报废</li>
+</ul>
+</li>
+<li>
+<p>运行与开发管理</p>
+<ul>
+<li>运行使用：策略规则审核、软件安装控制、系统变更、文档管理</li>
+<li>应用系统开发：安全同步开发、开发环境分离、测试联调控制、后期维护</li>
+<li>异常事件管理</li>
+</ul>
+</li>
+</ul>
+<h5 id="_18">一票否决</h5>
+<ul>
+<li>基本项--技术要求</li>
+<li>物理隔离</li>
+<li>安全保密产品选择</li>
+<li>安全域边界防护</li>
+<li>密级标识</li>
+<li>用户身份鉴别</li>
+<li>访问控制粒度</li>
+<li>信息传输</li>
+<li>信息存储</li>
+<li>信息设备的电磁泄漏</li>
+<li>边界控制</li>
+<li>违规外联监控</li>
+<li>基本项--管理要求</li>
+<li>集成资质单位选择</li>
+<li>管理机构（组织结构、机构职责）</li>
+<li>管理制度（责任制度、工作制度）</li>
+<li>管理人员（人员配备、权限划分）</li>
+</ul>
+<h2 id="_19">三、资质及人员要求</h2>
+<h5 id="_20">等级保护业务的企业资质要求</h5>
+<ul>
+<li>信息安全服务资质</li>
+<li>颁发机构：中国信息安全测评中心</li>
+<li>风险评估、安全工程、灾难恢复、安全开发</li>
+<li>信息安全服务资质</li>
+<li>颁发机构：中国信息安全认证中心</li>
+<li>安全集成、风险评估、应急处理、软件安全开发、安全运维、灾难备份与恢复</li>
+<li>信息安全等级保护安全建设服务机构能力评估合格证书</li>
+<li>颁发机构：公安部第一研究所</li>
+<li>信息安全等级保护测评机构能力评估合格证书</li>
+<li>颁发机构：公安部第三研究所</li>
+<li>测评资质</li>
+</ul>
+<h5 id="_21">分级保护业务的企业资质要求</h5>
+<ul>
+<li>产品：国家保密科技测评中心检测认可证书（国保测）</li>
+<li>单项资质：软件开发、综合布线、系统服务、系统咨询、屏蔽室建设、风险评估、工程监理、数据恢复</li>
+<li>乙级资质：本省、自治区、直辖市范围系统集成（省保密局）</li>
+<li>甲级资质：全国范围、系统集成（国家保密科技测评中心）</li>
+<li>集成资质管理：集成资质实行行政审批制度，建设单位必须具有资质证书</li>
+</ul>
+<h5 id="_22">等保/分保业务的人员资质要求</h5>
+<table>
+<thead>
+<tr>
+<th align="center">资质名称</th>
+<th align="center">认证机构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">CISSP（国际认证）：注册信息系统安全专家</td>
+<td align="center">（ISC）²</td>
+</tr>
+<tr>
+<td align="center">CISP（国内认证）：注册信息安全专家</td>
+<td align="center">中国信息安全测评中心</td>
+</tr>
+<tr>
+<td align="center">CISAW：信息安全保障从业人员</td>
+<td align="center">中国信息安全测评中心</td>
+</tr>
+<tr>
+<td align="center">DJCP：信息安全等级测评师证书</td>
+<td align="center">公安部三所</td>
+</tr>
+<tr>
+<td align="center">信息安全等级保护建设专业技术人员证书</td>
+<td align="center">公安部一所</td>
+</tr>
+<tr>
+<td align="center">涉密岗位工作人员保密业务培训证书</td>
+<td align="center">国家保密局</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_23">相关国内国际标准</h2>
+<ul>
+<li>ISO27001</li>
+<li>信息安全等级保护</li>
+<li>GDRP</li>
+<li>SDL</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="../../K8S/%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BAK8S%E9%9B%86%E7%BE%A4/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 从零搭建K8S集群" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              从零搭建K8S集群
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AD%89%E7%BA%A7%E4%BF%9D%E6%8A%A4%E6%B5%8B%E8%AF%84%E9%AB%98%E9%A3%8E%E9%99%A9%E5%88%A4%E5%AE%9A%E6%8C%87%E5%BC%95/" class="md-footer__link md-footer__link--next" aria-label="下一页: 网络安全等级保护测评高风险判定指引" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              网络安全等级保护测评高风险判定指引
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.37e9125f.min.js"></script>
+      
+    
+  </body>
+</html>

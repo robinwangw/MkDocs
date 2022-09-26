@@ -1,0 +1,1931 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.3">
+    
+    
+      
+        <title>从零搭建K8S集群 - Robin's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7a952b86.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#centos7k8s" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Robin&#39;s Blog" class="md-header__button md-logo" aria-label="Robin's Blog" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robin's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              从零搭建K8S集群
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robinoneway/MkDocs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Robin's Blog
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Robin&#39;s Blog" class="md-nav__button md-logo" aria-label="Robin's Blog" data-md-component="logo">
+      
+  <img src="../../assets/logo_white.png" alt="logo">
+
+    </a>
+    Robin's Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robinoneway/MkDocs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Robin's Blog
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          K8S
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="K8S" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          K8S
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          从零搭建K8S集群
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        从零搭建K8S集群
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#centos7k8s" class="md-nav__link">
+    Centos7从零搭建K8S集群
+  </a>
+  
+    <nav class="md-nav" aria-label="Centos7从零搭建K8S集群">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    主机配置：
+  </a>
+  
+    <nav class="md-nav" aria-label="主机配置：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hosts" class="md-nav__link">
+    配置hosts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockers" class="md-nav__link">
+    配置Dockers镜像加速
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swap" class="md-nav__link">
+    禁用swap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    关闭防火墙
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selinux" class="md-nav__link">
+    关闭selinux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    签名证书
+  </a>
+  
+    <nav class="md-nav" aria-label="签名证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cfssl" class="md-nav__link">
+    准备cfssl工具
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd-ssl" class="md-nav__link">
+    自签Etcd SSL证书
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd" class="md-nav__link">
+    Etcd数据库集群部署
+  </a>
+  
+    <nav class="md-nav" aria-label="Etcd数据库集群部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etcd_1" class="md-nav__link">
+    下载etcd：
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcdetcdconf" class="md-nav__link">
+    配置etcd配置文件：etcd.conf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcdetcdservice" class="md-nav__link">
+    创建Etcd服务：etcd.service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    查看集群状态
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#master" class="md-nav__link">
+    部署Master组件
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Master组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apiserver-ssl" class="md-nav__link">
+    自签ApiServer SSL证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-apiserver" class="md-nav__link">
+    部署kube-apiserver组件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-controller-manager" class="md-nav__link">
+    部署 kube-controller-manager 组件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-scheduler" class="md-nav__link">
+    部署 kube-scheduler 组件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node" class="md-nav__link">
+    部署Node组件
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Node组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    安装docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node_1" class="md-nav__link">
+    Node节点证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubelet" class="md-nav__link">
+    安装kubelet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    安装kube-proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k8s" class="md-nav__link">
+    部署K8S容器集群网络
+  </a>
+  
+    <nav class="md-nav" aria-label="部署K8S容器集群网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cni" class="md-nav__link">
+    创建CNI工作目录
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    部署Dashboard
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard_1" class="md-nav__link">
+    部署dashboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    登录授权
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus" class="md-nav__link">
+    部署Prometheus
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Prometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kube-prometheus" class="md-nav__link">
+    下载kube-prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    创建并启动监控（monitoring）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus_1" class="md-nav__link">
+    导入prometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    问题排查流程
+  </a>
+  
+    <nav class="md-nav" aria-label="问题排查流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    通用排查
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd_2" class="md-nav__link">
+    查看ETCD服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    常用命令：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          等保
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="等保" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          等保
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AD%89%E4%BF%9D/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%90%88%E8%A7%84%E5%9F%B9%E8%AE%AD/" class="md-nav__link">
+        信息安全合规培训
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AD%89%E4%BF%9D/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AD%89%E7%BA%A7%E4%BF%9D%E6%8A%A4%E6%B5%8B%E8%AF%84%E9%AB%98%E9%A3%8E%E9%99%A9%E5%88%A4%E5%AE%9A%E6%8C%87%E5%BC%95/" class="md-nav__link">
+        网络安全等级保护测评高风险判定指引
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#centos7k8s" class="md-nav__link">
+    Centos7从零搭建K8S集群
+  </a>
+  
+    <nav class="md-nav" aria-label="Centos7从零搭建K8S集群">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    主机配置：
+  </a>
+  
+    <nav class="md-nav" aria-label="主机配置：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hosts" class="md-nav__link">
+    配置hosts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockers" class="md-nav__link">
+    配置Dockers镜像加速
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swap" class="md-nav__link">
+    禁用swap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    关闭防火墙
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selinux" class="md-nav__link">
+    关闭selinux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    签名证书
+  </a>
+  
+    <nav class="md-nav" aria-label="签名证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cfssl" class="md-nav__link">
+    准备cfssl工具
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd-ssl" class="md-nav__link">
+    自签Etcd SSL证书
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd" class="md-nav__link">
+    Etcd数据库集群部署
+  </a>
+  
+    <nav class="md-nav" aria-label="Etcd数据库集群部署">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etcd_1" class="md-nav__link">
+    下载etcd：
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcdetcdconf" class="md-nav__link">
+    配置etcd配置文件：etcd.conf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcdetcdservice" class="md-nav__link">
+    创建Etcd服务：etcd.service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    查看集群状态
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#master" class="md-nav__link">
+    部署Master组件
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Master组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apiserver-ssl" class="md-nav__link">
+    自签ApiServer SSL证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-apiserver" class="md-nav__link">
+    部署kube-apiserver组件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-controller-manager" class="md-nav__link">
+    部署 kube-controller-manager 组件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-scheduler" class="md-nav__link">
+    部署 kube-scheduler 组件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node" class="md-nav__link">
+    部署Node组件
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Node组件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    安装docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node_1" class="md-nav__link">
+    Node节点证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubelet" class="md-nav__link">
+    安装kubelet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-proxy" class="md-nav__link">
+    安装kube-proxy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k8s" class="md-nav__link">
+    部署K8S容器集群网络
+  </a>
+  
+    <nav class="md-nav" aria-label="部署K8S容器集群网络">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cni" class="md-nav__link">
+    创建CNI工作目录
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" class="md-nav__link">
+    部署Dashboard
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard_1" class="md-nav__link">
+    部署dashboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    登录授权
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus" class="md-nav__link">
+    部署Prometheus
+  </a>
+  
+    <nav class="md-nav" aria-label="部署Prometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kube-prometheus" class="md-nav__link">
+    下载kube-prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    创建并启动监控（monitoring）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus_1" class="md-nav__link">
+    导入prometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    问题排查流程
+  </a>
+  
+    <nav class="md-nav" aria-label="问题排查流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    通用排查
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etcd_2" class="md-nav__link">
+    查看ETCD服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    常用命令：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/robinoneway/MkDocs/edit/master/docs/K8S/从零搭建K8S集群.md" title="编辑此页" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+  <h1>从零搭建K8S集群</h1>
+
+<h2 id="centos7k8s"><code>Centos7</code>从零搭建<code>K8S</code>集群</h2>
+<h3 id="_1">主机配置：</h3>
+<div class="highlight"><pre><span></span><code>k8s-master-1:192.168.20.148
+k8s-node-1:192.168.20.149
+k8s-node-2:192.168.20.150
+k8s-master-2:192.168.20.151
+
+硬件：2Core,2G,20G
+系统：centos7 x86_64
+</code></pre></div>
+<h5 id="hosts">配置<code>hosts</code></h5>
+<div class="highlight"><pre><span></span><code>cat &gt;&gt; /etc/hosts &lt;&lt; EOF
+192.168.20.148 k8s-master-1
+192.168.20.151 k8s-master-2
+192.168.20.149 k8s-node-1
+192.168.20.150 k8s-node-2
+EOF
+</code></pre></div>
+<h5 id="dockers">配置Dockers镜像加速</h5>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json &lt;&lt;-&#39;EOF&#39;
+{
+  &quot;registry-mirrors&quot;: [&quot;https://xxxxxxxx.mirror.aliyuncs.com&quot;]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre></div>
+<h5 id="swap">禁用<code>swap</code></h5>
+<div class="highlight"><pre><span></span><code>swapoff -a
+vi /etc/fstab #注释swap所在行
+</code></pre></div>
+<h5 id="_2">关闭防火墙</h5>
+<div class="highlight"><pre><span></span><code>systemctl stop firewalld
+systemctl disable firewalld
+</code></pre></div>
+<h5 id="selinux">关闭<code>selinux</code></h5>
+<div class="highlight"><pre><span></span><code>setenforce 0
+sed -i &#39;s/enforcing/disabled/&#39; /etc/selinux/config
+</code></pre></div>
+<h3 id="_3">签名证书</h3>
+<h5 id="cfssl">准备<code>cfssl</code>工具</h5>
+<div class="highlight"><pre><span></span><code>curl -L https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 -o /usr/local/bin/cfssl
+curl -L https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 -o /usr/local/bin/cfssljson
+curl -L https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64 -o /usr/local/bin/cfssl-certinfo
+chmod +x /usr/local/bin/cfssl*
+</code></pre></div>
+<h5 id="etcd-ssl">自签<code>Etcd SSL</code>证书</h5>
+<p>创建目录：<code>mkdir -p /k8s/etcd/{ssl,cfg,bin}</code></p>
+<p>创建CA配置文件：<code>ca-config.json</code></p>
+<div class="highlight"><pre><span></span><code>cd /k8s/etcd/ssl
+cat &gt; ca-config.json &lt;&lt;EOF
+{
+  &quot;signing&quot;: {
+    &quot;default&quot;: {
+      &quot;expiry&quot;: &quot;87600h&quot;
+    },
+    &quot;profiles&quot;: {
+      &quot;etcd&quot;: {
+        &quot;usages&quot;: [
+            &quot;signing&quot;,
+            &quot;key encipherment&quot;,
+            &quot;server auth&quot;,
+            &quot;client auth&quot;
+        ],
+        &quot;expiry&quot;: &quot;87600h&quot;
+      }
+    }
+  }
+}
+EOF
+</code></pre></div>
+<p>创建CA证书签名请求文件：<code>ca-csr.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; ca-csr.json &lt;&lt;EOF
+{
+  &quot;CN&quot;: &quot;etcd&quot;,
+  &quot;key&quot;: {
+    &quot;algo&quot;: &quot;rsa&quot;,
+    &quot;size&quot;: 2048
+  },
+  &quot;names&quot;: [
+    {
+      &quot;C&quot;: &quot;CN&quot;,
+      &quot;ST&quot;: &quot;Shanghai&quot;,
+      &quot;L&quot;: &quot;Shanghai&quot;,
+      &quot;O&quot;: &quot;etcd&quot;,
+      &quot;OU&quot;: &quot;System&quot;
+    }
+  ],
+    &quot;ca&quot;: {
+       &quot;expiry&quot;: &quot;87600h&quot;
+    }
+}
+EOF
+</code></pre></div>
+<p>生成CA证书和私钥：<code>cfssl gencert -initca ca-csr.json | cfssljson -bare ca</code></p>
+<p>创建证书签名请求文件：<code>etcd-csr.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; etcd-csr.json &lt;&lt;EOF
+{
+    &quot;CN&quot;: &quot;etcd&quot;,
+    &quot;hosts&quot;: [
+      &quot;192.168.20.148&quot;,
+      &quot;192.168.20.149&quot;,
+      &quot;192.168.20.150&quot;
+    ],
+    &quot;key&quot;: {
+        &quot;algo&quot;: &quot;rsa&quot;,
+        &quot;size&quot;: 2048
+    },
+    &quot;names&quot;: [
+        {
+            &quot;C&quot;: &quot;CN&quot;,
+            &quot;ST&quot;: &quot;BeiJing&quot;,
+            &quot;L&quot;: &quot;BeiJing&quot;,
+            &quot;O&quot;: &quot;etcd&quot;,
+            &quot;OU&quot;: &quot;System&quot;
+        }
+    ]
+}
+EOF
+</code></pre></div>
+<p>为<code>etcd</code>生成证书和私钥：<code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=etcd etcd-csr.json | cfssljson -bare etcd</code></p>
+<h3 id="etcd"><code>Etcd</code>数据库集群部署</h3>
+<h5 id="etcd_1">下载<code>etcd</code>：</h5>
+<div class="highlight"><pre><span></span><code>wget https://github.com/etcd-io/etcd/releases/download/v3.2.28/etcd-v3.2.28-linux-amd64.tar.gz
+tar -xzvf etcd-v3.2.28-linux-amd64.tar.gz
+cp etcd-v3.2.28-linux-amd64/{etcd,etcdctl} /k8s/etcd/bin
+rm -rf etcd-v3.2.28-linux-amd64*
+</code></pre></div>
+<h5 id="etcdetcdconf">配置etcd配置文件：etcd.conf</h5>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/etcd/cfg/etcd.conf &lt;&lt;EOF 
+# [member]
+ETCD_NAME=etcd-1
+ETCD_DATA_DIR=/k8s/data/default.etcd
+ETCD_LISTEN_PEER_URLS=https://192.168.20.148:2380
+ETCD_LISTEN_CLIENT_URLS=https://192.168.20.148:2379
+
+# [cluster]
+ETCD_INITIAL_ADVERTISE_PEER_URLS=https://192.168.20.148:2380
+ETCD_ADVERTISE_CLIENT_URLS=https://192.168.20.148:2379
+ETCD_INITIAL_CLUSTER=etcd-1=https://192.168.20.148:2380,etcd-2=https://192.168.20.149:2380,etcd-3=https://192.168.20.150:2380
+ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+ETCD_INITIAL_CLUSTER_STATE=new
+
+# [security]
+ETCD_CERT_FILE=/k8s/etcd/ssl/etcd.pem
+ETCD_KEY_FILE=/k8s/etcd/ssl/etcd-key.pem
+ETCD_TRUSTED_CA_FILE=/k8s/etcd/ssl/ca.pem
+ETCD_PEER_CERT_FILE=/k8s/etcd/ssl/etcd.pem
+ETCD_PEER_KEY_FILE=/k8s/etcd/ssl/etcd-key.pem
+ETCD_PEER_TRUSTED_CA_FILE=/k8s/etcd/ssl/ca.pem
+EOF
+</code></pre></div>
+<h5 id="etcdetcdservice">创建<code>Etcd</code>服务：<code>etcd.service</code></h5>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/etcd/etcd.service &lt;&lt;&#39;EOF&#39;
+[Unit]
+Description=Etcd Server
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+EnvironmentFile=/k8s/etcd/cfg/etcd.conf
+WorkingDirectory=${ETCD_DATA_DIR}
+
+ExecStart=/k8s/etcd/bin/etcd \
+  --name=${ETCD_NAME} \
+  --data-dir=${ETCD_DATA_DIR} \
+  --listen-peer-urls=${ETCD_LISTEN_PEER_URLS} \
+  --listen-client-urls=${ETCD_LISTEN_CLIENT_URLS},http://127.0.0.1:2379 \
+  --initial-advertise-peer-urls=${ETCD_INITIAL_ADVERTISE_PEER_URLS} \
+  --advertise-client-urls=${ETCD_ADVERTISE_CLIENT_URLS} \
+  --initial-cluster=${ETCD_INITIAL_CLUSTER} \
+  --initial-cluster-token=${ETCD_INITIAL_CLUSTER_TOKEN} \
+  --initial-cluster-state=${ETCD_INITIAL_CLUSTER_STATE} \
+  --cert-file=${ETCD_CERT_FILE} \
+  --key-file=${ETCD_KEY_FILE} \
+  --trusted-ca-file=${ETCD_TRUSTED_CA_FILE} \
+  --peer-cert-file=${ETCD_PEER_CERT_FILE} \
+  --peer-key-file=${ETCD_PEER_KEY_FILE} \
+  --peer-trusted-ca-file=${ETCD_PEER_TRUSTED_CA_FILE}
+
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+</code></pre></div>
+<h5 id="_4">查看集群状态</h5>
+<div class="highlight"><pre><span></span><code>/k8s/etcd/bin/etcdctl \
+    --ca-file=/k8s/etcd/ssl/ca.pem \
+    --cert-file=/k8s/etcd/ssl/etcd.pem \
+    --key-file=/k8s/etcd/ssl/etcd-key.pem \
+    --endpoints=https://192.168.20.148:2379,https://192.168.20.149:2379,https://192.168.20.150:2379 \
+cluster-health
+</code></pre></div>
+<p><img alt="image-20220922102238477" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220922102238477.png" /></p>
+<h3 id="master">部署<code>Master</code>组件</h3>
+<h5 id="apiserver-ssl">自签<code>ApiServer SSL</code>证书</h5>
+<div class="highlight"><pre><span></span><code>mkdir -p /k8s/kubernetes/{ssl,cfg,bin,logs}
+</code></pre></div>
+<p>创建CA配置文件：<code>ca-config.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/ssl/ca-config.json &lt;&lt;EOF
+{
+  &quot;signing&quot;: {
+    &quot;default&quot;: {
+      &quot;expiry&quot;: &quot;87600h&quot;
+    },
+    &quot;profiles&quot;: {
+      &quot;kubernetes&quot;: {
+        &quot;usages&quot;: [
+            &quot;signing&quot;,
+            &quot;key encipherment&quot;,
+            &quot;server auth&quot;,
+            &quot;client auth&quot;
+        ],
+        &quot;expiry&quot;: &quot;87600h&quot;
+      }
+    }
+  }
+}
+EOF
+</code></pre></div>
+<p>创建CA证书签名请求文件：<code>ca-csr.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/ssl/ca-csr.json &lt;&lt;EOF
+{
+  &quot;CN&quot;: &quot;kubernetes&quot;,
+  &quot;key&quot;: {
+    &quot;algo&quot;: &quot;rsa&quot;,
+    &quot;size&quot;: 2048
+  },
+  &quot;names&quot;: [
+    {
+      &quot;C&quot;: &quot;CN&quot;,
+      &quot;ST&quot;: &quot;Shanghai&quot;,
+      &quot;L&quot;: &quot;Shanghai&quot;,
+      &quot;O&quot;: &quot;kubernetes&quot;,
+      &quot;OU&quot;: &quot;System&quot;
+    }
+  ],
+    &quot;ca&quot;: {
+       &quot;expiry&quot;: &quot;87600h&quot;
+    }
+}
+EOF
+</code></pre></div>
+<p>生成CA证书和私钥：<code>cfssl gencert -initca ca-csr.json | cfssljson -bare ca</code></p>
+<p>创建证书签名请求文件：<code>kubernetes-csr.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/ssl/kubernetes-csr.json &lt;&lt;EOF
+{
+    &quot;CN&quot;: &quot;kubernetes&quot;,
+    &quot;hosts&quot;: [
+      &quot;127.0.0.1&quot;,
+      &quot;10.0.0.1&quot;,
+      &quot;192.168.20.148&quot;,
+      &quot;192.168.20.149&quot;,
+      &quot;192.168.20.150&quot;,
+      &quot;192.168.20.151&quot;,
+      &quot;kubernetes&quot;,
+      &quot;kubernetes.default&quot;,
+      &quot;kubernetes.default.svc&quot;,
+      &quot;kubernetes.default.svc.cluster&quot;,
+      &quot;kubernetes.default.svc.cluster.local&quot;
+    ],
+    &quot;key&quot;: {
+        &quot;algo&quot;: &quot;rsa&quot;,
+        &quot;size&quot;: 2048
+    },
+    &quot;names&quot;: [
+        {
+            &quot;C&quot;: &quot;CN&quot;,
+            &quot;ST&quot;: &quot;BeiJing&quot;,
+            &quot;L&quot;: &quot;BeiJing&quot;,
+            &quot;O&quot;: &quot;kubernetes&quot;,
+            &quot;OU&quot;: &quot;System&quot;
+        }
+    ]
+}
+EOF
+</code></pre></div>
+<p>为<code>kubernetes</code>生成证书和私钥</p>
+<div class="highlight"><pre><span></span><code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
+</code></pre></div>
+<h5 id="kube-apiserver">部署<code>kube-apiserver</code>组件</h5>
+<p>下载<code>kubernetes</code>二进制包：<a href="https://storage.googleapis.com/kubernetes-release/release/v1.19.0/kubernetes-server-linux-amd64.tar.gz">下载链接</a>，将下载好的文件<code>kubernetes-server-linux-amd64.tar.gz</code>上传到<code>/usr/local/src</code>文件夹下，并解压</p>
+<div class="highlight"><pre><span></span><code>tar -xzvf kubernetes-server-linux-amd64.tar.gz
+</code></pre></div>
+<p>将Master节点上部署的组件拷贝到<code>/k8s/kubernetes/bin</code>目录下：</p>
+<div class="highlight"><pre><span></span><code>cp -p /usr/local/src/kubernetes/server/bin/{kube-apiserver,kube-controller-manager,kube-scheduler} /k8s/kubernetes/bin/
+cp -p /usr/local/src/kubernetes/server/bin/kubectl /usr/local/bin/
+</code></pre></div>
+<p>创建Node令牌文件：<code>token.csv</code></p>
+<div class="highlight"><pre><span></span><code># 生成token字符串
+head -c 16 /dev/urandom | od -An -t x |tr -d &#39; &#39;
+# 使用生成的字符串替换0c2be6b1473e60b5f723c404b34e64bf
+cat &gt; /k8s/kubernetes/cfg/token.csv &lt;&lt;&#39;EOF&#39;
+0c2be6b1473e60b5f723c404b34e64bf,kubelet-bootstrap,10001,&quot;system:node-bootstrapper&quot;
+EOF
+</code></pre></div>
+<p>创建<code>kube-apiserver</code>配置文件：<code>kube-apiserver.conf</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-apiserver.conf <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">KUBE_APISERVER_OPTS=&quot;--etcd-servers=https://192.168.20.148:2379,https://192.168.20.149:2379,https://192.168.20.150:2379 \</span>
+<span class="s">  --bind-address=192.168.20.148 \</span>
+<span class="s">  --secure-port=6443 \</span>
+<span class="s">  --advertise-address=192.168.20.148 \</span>
+<span class="s">  --allow-privileged=true \</span>
+<span class="s">  --service-cluster-ip-range=10.0.0.0/24 \</span>
+<span class="s">  --service-node-port-range=30000-32767 \</span>
+<span class="s">  --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,NodeRestriction \</span>
+<span class="s">  --authorization-mode=RBAC,Node \</span>
+<span class="s">  --enable-bootstrap-token-auth=true \</span>
+<span class="s">  --token-auth-file=/k8s/kubernetes/cfg/token.csv \</span>
+<span class="s">  --kubelet-client-certificate=/k8s/kubernetes/ssl/kubernetes.pem \</span>
+<span class="s">  --kubelet-client-key=/k8s/kubernetes/ssl/kubernetes-key.pem \</span>
+<span class="s">  --tls-cert-file=/k8s/kubernetes/ssl/kubernetes.pem \</span>
+<span class="s">  --tls-private-key-file=/k8s/kubernetes/ssl/kubernetes-key.pem \</span>
+<span class="s">  --client-ca-file=/k8s/kubernetes/ssl/ca.pem \</span>
+<span class="s">  --service-account-key-file=/k8s/kubernetes/ssl/ca-key.pem \</span>
+<span class="s">  --etcd-cafile=/k8s/etcd/ssl/ca.pem \</span>
+<span class="s">  --etcd-certfile=/k8s/etcd/ssl/etcd.pem \</span>
+<span class="s">  --etcd-keyfile=/k8s/etcd/ssl/etcd-key.pem \</span>
+<span class="s">  --v=2 \</span>
+<span class="s">  --logtostderr=false \</span>
+<span class="s">  --log-dir=/k8s/kubernetes/logs \</span>
+<span class="s">  --audit-log-maxage=30 \</span>
+<span class="s">  --audit-log-maxbackup=3 \</span>
+<span class="s">  --audit-log-maxsize=100 \</span>
+<span class="s">  --audit-log-path=/k8s/kubernetes/logs/k8s-audit.log&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>apiserver</code> 服务：<code>kube-apiserver.service</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /usr/lib/systemd/system/kube-apiserver.service <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">[Unit]</span>
+<span class="s">Description=Kubernetes API Server</span>
+<span class="s">Documentation=https://github.com/GoogleCloudPlatform/kubernetes</span>
+<span class="s">After=network.target</span>
+
+<span class="s">[Service]</span>
+<span class="s">EnvironmentFile=-/k8s/kubernetes/cfg/kube-apiserver.conf</span>
+<span class="s">ExecStart=/k8s/kubernetes/bin/kube-apiserver $KUBE_APISERVER_OPTS</span>
+
+<span class="s">Restart=on-failure</span>
+<span class="s">LimitNOFILE=65536</span>
+
+<span class="s">[Install]</span>
+<span class="s">WantedBy=multi-user.target</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>启动<code>kube-apiserver</code>服务：</p>
+<div class="highlight"><pre><span></span><code>systemctl daemon-reload
+systemctl start kube-apiserver
+systemctl <span class="nb">enable</span> kube-apiserver
+</code></pre></div>
+<p>将 <code>kubelet-bootstrap</code> 用户绑定到系统集群角色：</p>
+<div class="highlight"><pre><span></span><code>kubectl create clusterrolebinding kubelet-bootstrap <span class="se">\</span>
+  --clusterrole<span class="o">=</span>system:node-bootstrapper <span class="se">\</span>
+  --user<span class="o">=</span>kubelet-bootstrap
+</code></pre></div>
+<h5 id="kube-controller-manager">部署 <code>kube-controller-manager</code> 组件</h5>
+<p>创建 <code>kube-controller-manager</code> 配置文件：<code>kube-controller-manager.conf</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-controller-manager.conf <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">KUBE_CONTROLLER_MANAGER_OPTS=&quot;--leader-elect=true \</span>
+<span class="s">  --master=127.0.0.1:8080 \</span>
+<span class="s">  --address=127.0.0.1 \</span>
+<span class="s">  --allocate-node-cidrs=true \</span>
+<span class="s">  --cluster-cidr=10.244.0.0/16 \</span>
+<span class="s">  --service-cluster-ip-range=10.0.0.0/24 \</span>
+<span class="s">  --cluster-signing-cert-file=/k8s/kubernetes/ssl/ca.pem \</span>
+<span class="s">  --cluster-signing-key-file=/k8s/kubernetes/ssl/ca-key.pem \</span>
+<span class="s">  --root-ca-file=/k8s/kubernetes/ssl/ca.pem \</span>
+<span class="s">  --service-account-private-key-file=/k8s/kubernetes/ssl/ca-key.pem \</span>
+<span class="s">  --experimental-cluster-signing-duration=87600h0m0s \</span>
+<span class="s">  --v=2 \</span>
+<span class="s">  --logtostderr=false \</span>
+<span class="s">  --log-dir=/k8s/kubernetes/logs&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>kube-controller-manager</code> 服务：<code>kube-controller-manager.service</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /usr/lib/systemd/system/kube-controller-manager.service <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">[Unit]</span>
+<span class="s">Description=Kubernetes Controller Manager</span>
+<span class="s">Documentation=https://github.com/GoogleCloudPlatform/kubernetes</span>
+<span class="s">After=network.target</span>
+
+<span class="s">[Service]</span>
+<span class="s">EnvironmentFile=/k8s/kubernetes/cfg/kube-controller-manager.conf</span>
+<span class="s">ExecStart=/k8s/kubernetes/bin/kube-controller-manager $KUBE_CONTROLLER_MANAGER_OPTS</span>
+
+<span class="s">Restart=on-failure</span>
+<span class="s">LimitNOFILE=65536</span>
+
+<span class="s">[Install]</span>
+<span class="s">WantedBy=multi-user.target</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>启动 <code>kube-controller-manager</code> 组件</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># systemctl daemon-reload</span>
+<span class="c1"># systemctl start kube-controller-manager</span>
+<span class="c1"># systemctl enable kube-controller-manager</span>
+</code></pre></div>
+<h5 id="kube-scheduler">部署 <code>kube-scheduler</code> 组件</h5>
+<p>创建 <code>kube-scheduler</code> 配置文件：<code>kube-scheduler.conf</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-scheduler.conf <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">KUBE_SCHEDULER_OPTS=&quot;--leader-elect=true \</span>
+<span class="s">  --master=127.0.0.1:8080 \</span>
+<span class="s">  --address=127.0.0.1 \</span>
+<span class="s">  --v=2 \</span>
+<span class="s">  --logtostderr=false \</span>
+<span class="s">  --log-dir=/k8s/kubernetes/logs&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>kube-scheduler</code> 服务：<code>kube-scheduler.service</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /usr/lib/systemd/system/kube-scheduler.service <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">[Unit]</span>
+<span class="s">Description=Kubernetes Scheduler</span>
+<span class="s">Documentation=https://github.com/GoogleCloudPlatform/kubernetes</span>
+<span class="s">After=network.target</span>
+
+<span class="s">[Service]</span>
+<span class="s">EnvironmentFile=/k8s/kubernetes/cfg/kube-scheduler.conf</span>
+<span class="s">ExecStart=/k8s/kubernetes/bin/kube-scheduler $KUBE_SCHEDULER_OPTS</span>
+
+<span class="s">Restart=on-failure</span>
+<span class="s">LimitNOFILE=65536</span>
+
+<span class="s">[Install]</span>
+<span class="s">WantedBy=multi-user.target</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>启动 <code>kube-scheduler</code> 组件</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># systemctl daemon-reload</span>
+<span class="c1"># systemctl start kube-scheduler</span>
+<span class="c1"># systemctl enable kube-scheduler</span>
+</code></pre></div>
+<p>查看集群状态：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># kubectl get cs</span>
+</code></pre></div>
+<h3 id="node">部署Node组件</h3>
+<h5 id="docker">安装<code>docker</code></h5>
+<p>参考文档：https://docs.docker.com/engine/install/centos/</p>
+<h5 id="node_1"><code>Node</code>节点证书</h5>
+<p>创建 Node 节点的证书签名请求文件：<code>kube-proxy-csr.json</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/ssl/kube-proxy-csr.json &lt;&lt;EOF
+{
+    &quot;CN&quot;: &quot;system:kube-proxy&quot;,
+    &quot;hosts&quot;: [],
+    &quot;key&quot;: {
+        &quot;algo&quot;: &quot;rsa&quot;,
+        &quot;size&quot;: 2048
+    },
+    &quot;names&quot;: [
+        {
+            &quot;C&quot;: &quot;CN&quot;,
+            &quot;ST&quot;: &quot;BeiJing&quot;,
+            &quot;L&quot;: &quot;BeiJing&quot;,
+            &quot;O&quot;: &quot;kubernetes&quot;,
+            &quot;OU&quot;: &quot;System&quot;
+        }
+    ]
+}
+EOF
+</code></pre></div>
+<p>为 <code>kube-proxy</code> 生成证书和私钥</p>
+<div class="highlight"><pre><span></span><code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kube-proxy-csr.json | cfssljson -bare kube-proxy
+</code></pre></div>
+<p>在 <code>k8s-node-1</code>节点上创建<code>k8s</code>目录</p>
+<div class="highlight"><pre><span></span><code> -p /k8s/kubernetes/{bin,cfg,logs,ssl}
+</code></pre></div>
+<p>将 <code>k8s-master-1</code> 节点的<code>kubelet、kube-proxy</code>文件和证书拷贝到 <code>node</code> 节点</p>
+<div class="highlight"><pre><span></span><code>scp -r /usr/local/src/kubernetes/server/bin/<span class="o">{</span>kubelet,kube-proxy<span class="o">}</span> root@k8s-node-1:/k8s/kubernetes/bin/
+scp -r /k8s/kubernetes/ssl/<span class="o">{</span>ca.pem,kube-proxy.pem,kube-proxy-key.pem<span class="o">}</span> root@k8s-node-1:/k8s/kubernetes/ssl/
+</code></pre></div>
+<h5 id="kubelet">安装<code>kubelet</code></h5>
+<p>创建请求证书的配置文件：<code>bootstrap.kubeconfig</code></p>
+<p><code>bootstrap.kubeconfig</code> 将用于向 <code>apiserver</code> 请求证书，<code>apiserver</code> 会验证 <code>token</code>、证书 是否有效，验证通过则自动颁发证书。</p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/bootstrap.kubeconfig <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">clusters:</span>
+<span class="s">- cluster: </span>
+<span class="s">    certificate-authority: /k8s/kubernetes/ssl/ca.pem</span>
+<span class="s">    server: https://192.168.20.148:6443</span>
+<span class="s">  name: kubernetes</span>
+<span class="s">contexts:</span>
+<span class="s">- context:</span>
+<span class="s">    cluster: kubernetes</span>
+<span class="s">    user: kubelet-bootstrap</span>
+<span class="s">  name: default</span>
+<span class="s">current-context: default</span>
+<span class="s">kind: Config</span>
+<span class="s">preferences: {}</span>
+<span class="s">users:</span>
+<span class="s">- name: kubelet-bootstrap</span>
+<span class="s">  user:</span>
+<span class="s">    token: 0c2be6b1473e60b5f723c404b34e64bf</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建<code>kubelet</code>配置文件：<code>kubelet-config.yml</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kubelet-config.yml <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">kind: KubeletConfiguration</span>
+<span class="s">apiVersion: kubelet.config.k8s.io/v1beta1</span>
+<span class="s">address: 0.0.0.0</span>
+<span class="s">port: 10250</span>
+<span class="s">readOnlyPort: 10255</span>
+<span class="s">cgroupDriver: cgroupfs</span>
+<span class="s">clusterDNS:</span>
+<span class="s">- 10.0.0.2 </span>
+<span class="s">clusterDomain: cluster.local</span>
+<span class="s">failSwapOn: false</span>
+<span class="s">authentication:</span>
+<span class="s">  anonymous:</span>
+<span class="s">    enabled: false</span>
+<span class="s">  webhook:</span>
+<span class="s">    cacheTTL: 2m0s</span>
+<span class="s">    enabled: true</span>
+<span class="s">  x509: </span>
+<span class="s">    clientCAFile: /k8s/kubernetes/ssl/ca.pem</span>
+<span class="s">authorization:</span>
+<span class="s">  mode: Webhook</span>
+<span class="s">  webhook:</span>
+<span class="s">    cacheAuthroizedTTL: 5m0s</span>
+<span class="s">    cacheUnauthorizedTTL: 30s</span>
+<span class="s">evictionHard:</span>
+<span class="s">  imagefs.available: 15%</span>
+<span class="s">  memory.available: 100Mi</span>
+<span class="s">  nodefs.available: 10%</span>
+<span class="s">  nodefs.inodesFree: 5%</span>
+<span class="s">maxOpenFiles: 100000</span>
+<span class="s">maxPods: 110</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>kubelet</code> 服务配置文件：<code>kubelet.conf</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kubelet.conf &lt;&lt;&#39;EOF&#39;
+KUBELET_OPTS=&quot;--hostname-override=k8s-node-1 \
+  --network-plugin=cni \
+  --cni-bin-dir=/opt/cni/bin \
+  --cni-conf-dir=/etc/cni/net.d \
+  --cgroups-per-qos=false \
+  --enforce-node-allocatable=&quot;&quot; \
+  --kubeconfig=/k8s/kubernetes/cfg/kubelet.kubeconfig \
+  --bootstrap-kubeconfig=/k8s/kubernetes/cfg/bootstrap.kubeconfig \
+  --config=/k8s/kubernetes/cfg/kubelet-config.yml \
+  --cert-dir=/k8s/kubernetes/ssl \
+  --pod-infra-container-image=kubernetes/pause:latest \
+  --v=2 \
+  --logtostderr=false \
+  --log-dir=/k8s/kubernetes/logs&quot;
+EOF
+</code></pre></div>
+<p>创建<code>kubelet</code>服务：<code>kubelet.service</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /usr/lib/systemd/system/kubelet.service &lt;&lt;&#39;EOF&#39;
+[Unit]
+Description=Kubernetes Kubelet
+After=docker.service
+Before=docker.service
+
+[Service]
+EnvironmentFile=/k8s/kubernetes/cfg/kubelet.conf
+ExecStart=/k8s/kubernetes/bin/kubelet $KUBELET_OPTS
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+</code></pre></div>
+<p>启动<code>kubelet</code></p>
+<div class="highlight"><pre><span></span><code>systemctl daemon-reload
+systemctl start kubelet
+systemctl enable kubelet
+</code></pre></div>
+<h5 id="kube-proxy">安装<code>kube-proxy</code></h5>
+<p>创建 <code>kube-proxy</code> 连接 <code>apiserver</code> 的配置文件：<code>kube-proxy.kubeconfig</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-proxy.kubeconfig <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">clusters:</span>
+<span class="s">- cluster:</span>
+<span class="s">    certificate-authority: /k8s/kubernetes/ssl/ca.pem</span>
+<span class="s">    server: https://192.168.20.148:6443</span>
+<span class="s">  name: kubernetes</span>
+<span class="s">contexts:</span>
+<span class="s">- context:</span>
+<span class="s">    cluster: kubernetes</span>
+<span class="s">    user: kube-proxy</span>
+<span class="s">  name: default</span>
+<span class="s">current-context: default</span>
+<span class="s">kind: Config</span>
+<span class="s">preferences: {}</span>
+<span class="s">users:</span>
+<span class="s">- name: kube-proxy</span>
+<span class="s">  user:</span>
+<span class="s">    client-certificate: /k8s/kubernetes/ssl/kube-proxy.pem</span>
+<span class="s">    client-key: /k8s/kubernetes/ssl/kube-proxy-key.pem</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>kube-proxy</code> 配置文件：<code>kube-proxy-config.yml</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-proxy-config.yml &lt;&lt;&#39;EOF&#39;
+kind: KubeProxyConfiguration
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+address: 0.0.0.0
+metrisBindAddress: 0.0.0.0:10249
+clientConnection:
+  kubeconfig: /k8s/kubernetes/cfg/kube-proxy.kubeconfig
+hostnameOverride: k8s-node-1
+clusterCIDR: 10.0.0.0/24
+mode: ipvs
+ipvs:
+  scheduler: &quot;rr&quot;
+iptables:
+  masqueradeAll: true
+EOF
+</code></pre></div>
+<p>创建 <code>kube-proxy</code> 配置文件：<code>kube-proxy.conf</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /k8s/kubernetes/cfg/kube-proxy.conf <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">KUBE_PROXY_OPTS=&quot;--config=/k8s/kubernetes/cfg/kube-proxy-config.yml \</span>
+<span class="s">  --v=2 \</span>
+<span class="s">  --logtostderr=false \</span>
+<span class="s">  --log-dir=/k8s/kubernetes/logs&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>创建 <code>kube-proxy</code> 服务：<code>kube-proxy.service</code></p>
+<div class="highlight"><pre><span></span><code>cat &gt; /usr/lib/systemd/system/kube-proxy.service <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">[Unit]</span>
+<span class="s">Description=Kubernetes Proxy</span>
+<span class="s">After=network.target</span>
+
+<span class="s">[Service]</span>
+<span class="s">EnvironmentFile=/k8s/kubernetes/cfg/kube-proxy.conf</span>
+<span class="s">ExecStart=/k8s/kubernetes/bin/kube-proxy $KUBE_PROXY_OPTS</span>
+<span class="s">Restart=on-failure</span>
+<span class="s">LimitNOFILE=65536</span>
+
+<span class="s">[Install]</span>
+<span class="s">WantedBy=multi-user.target</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>启动 <code>kube-proxy</code></p>
+<div class="highlight"><pre><span></span><code>systemctl daemon-reload
+systemctl start kube-proxy
+systemctl enable kube-proxy
+</code></pre></div>
+<p>部署<code>k8s-node-2</code>，流程与上述一致，只需将配置文件中的<code>k8s-node-1</code>改为<code>k8s-node-2</code>即可。</p>
+<p><img alt="image-20220922170044480" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220922170044480.png" /></p>
+<h3 id="k8s">部署K8S容器集群网络</h3>
+<h5 id="cni">创建CNI工作目录</h5>
+<div class="highlight"><pre><span></span><code>mkdir -p /opt/cni/bin /etc/cni/net.d
+</code></pre></div>
+<h3 id="dashboard">部署<code>Dashboard</code></h3>
+<h5 id="dashboard_1">部署<code>dashboard</code></h5>
+<p>下载<code>dashboard.yaml</code>文件，<a href="http://mirror.faasx.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml">下载地址</a>，按下图修改：<img alt="img" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/856154-20191206010304862-1366726165.png" /></p>
+<p>部署<code>dashboard</code>：<code>kubectl apply -f kubernetes-dashboard.yaml</code></p>
+<p>通过<code>https</code>访问<code>dashboard</code>：<code>https://192.168.20.149:30005</code>（建议使用Firefox浏览器）</p>
+<h5 id="_5">登录授权</h5>
+<div class="highlight"><pre><span></span><code>cat &gt; kubernetes-adminuser.yaml <span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: ServiceAccount</span>
+<span class="s">metadata:</span>
+<span class="s">  name: admin-user</span>
+<span class="s">  namespace: kube-system</span>
+<span class="s">---</span>
+<span class="s">apiVersion: rbac.authorization.k8s.io/v1beta1</span>
+<span class="s">kind: ClusterRoleBinding</span>
+<span class="s">metadata:</span>
+<span class="s">  name: admin-user</span>
+<span class="s">roleRef:</span>
+<span class="s">  apiGroup: rbac.authorization.k8s.io</span>
+<span class="s">  kind: ClusterRole</span>
+<span class="s">  name: cluster-admin</span>
+<span class="s">subjects:</span>
+<span class="s">- kind: ServiceAccount</span>
+<span class="s">  name: admin-user</span>
+<span class="s">  namespace: kube-system</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>启动：<code>kubectl apply -f kubernetes-adminuser.yaml</code></p>
+<p>获取登录的<code>token</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk &#39; {print $1}&#39;)</span>
+Name:         admin-user-token-spctr
+Namespace:    kube-system
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: 633dc31e-ee8c-4fc0-909f-c406f7106513
+
+Type:  kubernetes.io/service-account-token
+
+<span class="nv">Data</span>
+<span class="o">====</span>
+namespace:  <span class="m">11</span> bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImZ6c3hBbVNQRnV4YUFOdDVUV2I4cmx0RkNSamZfVGpPdy1kcjQ2N3hwRncifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXNwY3RyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2MzNkYzMxZS1lZThjLTRmYzAtOTA5Zi1jNDA2ZjcxMDY1MTMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.HLs531qRO7m3VJygOplL5G_ngGJ8lFkvpQjaJphLN14oCCeHiMehukUBKOOpp1-DIITghFylsfsJ_eFPqYFwyC4VYaMHkdEJipTLhX23smgUked8l9-a462tuso_h8b-caKZW-7FIH8gUBJlUriQq7Kj56gtfuf5mXXt2-SAMnyjE1g9V1-4waeTXnMkuyQhFTege2ig4gvDHNfrtTQgr3VP8rfpJDo-ZftKlS5q87S1-K0r1FSMgfFgh23rXZMMdjxbkQpWgBlYq7t0wwTjGJXFJp0FudZX0TzvINdOLIWu_Z8W3ihSv3lHr5ubL2lOG6OLNHDtFDyEPUMI76OZnw
+ca.crt:     <span class="m">1383</span> bytes
+</code></pre></div>
+<p>使用<code>token</code>就可以登录<code>dashboard</code>页面了</p>
+<h3 id="prometheus">部署Prometheus</h3>
+<h5 id="kube-prometheus">下载<code>kube-prometheus</code></h5>
+<p>下载地址：https://github.com/prometheus-operator/kube-prometheus/releases</p>
+<p><img alt="image-20220924015007703" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220924015007703.png" /></p>
+<p>根据<code>Kubernetes</code>版本下载对应的<code>kube-prometheus</code>版本，将下载的压缩包上传到<code>k8s-master-1</code>主机，解压到<code>/k8s</code>文件夹：</p>
+<div class="highlight"><pre><span></span><code>tar xzf kube-prometheus-0.7.0.tar.gz -C /k8s
+</code></pre></div>
+<p>要想访问<code>grafana</code>，需要修改对应的配置文件，并按下图修改：</p>
+<div class="highlight"><pre><span></span><code>vi /k8s/kube-prometheus/manifests/grafana-service.yaml
+</code></pre></div>
+<p><img alt="image-20220924015936913" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220924015936913.png" /></p>
+<h5 id="monitoring">创建并启动监控（<code>monitoring</code>）</h5>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> /k8s/kube-prometheus/
+kubectl apply -f manifests/setup
+kubectl apply -f manifests/
+</code></pre></div>
+<p>执行这两条命令将创建一系列监控相关的<code>kubernetes</code>对象，待命令执行完毕，使用命令</p>
+<div class="highlight"><pre><span></span><code>kubectl get pod -A -o wide<span class="p">|</span>grep grafana
+</code></pre></div>
+<p>查看<code>grafana</code>被分派的节点，然后使用该节点的<code>IP</code>+端口号30030，即可访问<code>grafana</code>页面</p>
+<h5 id="prometheus_1">导入<code>prometheus</code></h5>
+<p>在<code>grafana</code>官网下载<code>kube-prometheus</code>模板，<a href="https://grafana.com/api/dashboards/14491/revisions/1/download">下载链接</a>，将<code>kube-prometheus</code>的<code>json</code>文件导入<code>grafana</code>：</p>
+<p><img alt="image-20220924021144615" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220924021144615.png" /></p>
+<p>导入之后页面如下：</p>
+<p><img alt="image-20220924021238795" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220924021238795.png" /></p>
+<h3 id="_6">问题排查流程</h3>
+<h5 id="_7">通用排查</h5>
+<p>检查<code>swap</code>分区是否关闭：</p>
+<div class="highlight"><pre><span></span><code>free -m       <span class="c1"># swap行后需全为0</span>
+swapoff -a    <span class="c1"># 关闭交换分区</span>
+vi /etc/fstab <span class="c1"># 注释swap所在行</span>
+</code></pre></div>
+<p>检查防火墙是否禁用：</p>
+<div class="highlight"><pre><span></span><code>systemctl status firewalld       <span class="c1">#查看防火墙状态</span>
+systemctl disable firewalld      <span class="c1">#禁止防火墙开机启动</span>
+systemctl stop firewalld         <span class="c1">#停止防火墙服务</span>
+</code></pre></div>
+<p>检查是否禁用<code>selinux</code></p>
+<div class="highlight"><pre><span></span><code>getenforce           <span class="c1">#获取selinux状态</span>
+<span class="c1">### 修改/etc/selinux/config 文件</span>
+<span class="c1">### 将SELINUX=enforcing改为SELINUX=disabled，(需要重启)</span>
+</code></pre></div>
+<h5 id="etcd_2">查看ETCD服务</h5>
+<div class="highlight"><pre><span></span><code>systemctl status etcd         <span class="c1">#查看etcd服务状态</span>
+vi /k8s/etcd/cfg/etcd.conf    <span class="c1">#修改etcd配置文件</span>
+systemctl daemon-reload       <span class="c1">#重新加载配置文件</span>
+systemctl start/restart etcd  <span class="c1">#启动/重启etcd服务</span>
+systemctl <span class="nb">enable</span> etcd         <span class="c1">#设置etcd服务开机启动</span>
+</code></pre></div>
+<p>注意：首次部署和启动<code>etcd</code>服务时，配置文件<code>etcd.conf</code>中配置项<code>--initial-cluster-state=new</code>，如果二次或之后启动，需要修改为<code>--initial-cluster-state=existing</code>；应该先启动各<code>Node</code>节点的<code>etcd</code>服务，最后启动<code>Master</code>节点的<code>etcd</code>服务</p>
+<h5 id="_8">常用命令：</h5>
+<p>检查集群健康状态</p>
+<div class="highlight"><pre><span></span><code>/k8s/etcd/bin/etcdctl <span class="se">\</span>
+    --ca-file<span class="o">=</span>/k8s/etcd/ssl/ca.pem <span class="se">\</span>
+    --cert-file<span class="o">=</span>/k8s/etcd/ssl/etcd.pem <span class="se">\</span>
+    --key-file<span class="o">=</span>/k8s/etcd/ssl/etcd-key.pem <span class="se">\</span>
+    --endpoints<span class="o">=</span>https://192.168.20.148:2379,https://192.168.20.149:2379,https://192.168.20.150:2379 <span class="se">\</span>
+cluster-health
+</code></pre></div>
+<p>各服务启动状态命令：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">## Master节点</span>
+systemctl status etcd
+systemctl status kube-apiserver
+systemctl status kube-controller-manager
+systemctl status kube-scheduler
+<span class="c1">## Node节点</span>
+systemctl status docker
+systemctl status kubelet
+systemctl status kube-proxy
+</code></pre></div>
+<p>查看组件状态：<code>kubectl get cs</code></p>
+<p>查看是否有新的客户端请求颁发证书：<code>kubectl get csr</code></p>
+<p>查看节点信息：</p>
+<div class="highlight"><pre><span></span><code>kubectl get node
+kubectl get node -o wide
+</code></pre></div>
+<p>部署<code>Flannel</code>：<code>kubectl apply -f kube-flannel.yml</code></p>
+<p>查看Pod信息：</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods -n kube-system -o wide <span class="c1"># -n:指定命名空间</span>
+kubectl get pods -o wide
+</code></pre></div>
+<p>创建<code>Pod</code>（<code>Nginx</code>服务）：<code>kubectl create deployment web --image=nginx</code></p>
+<p>暴露端口：<code>kubectl expose deployment web --port=80 --type=NodePort</code></p>
+<p>查看服务：<code>kubectl get svc</code></p>
+<p>查看所有Pod：<code>kubectl get pod -A -o wide</code></p>
+<p><img alt="image-20220923144752397" src="https://raw.githubusercontent.com/robinoneway/ImageHost/master/img/image-20220923144752397.png" /></p>
+<p>获取<code>deployment</code>：<code>kubectl get deployment -A -o wide</code></p>
+<p>删除Pod（直接删除Pod不能删除，需要通过删除Deployment来删除），其中<code>DEPLOYMENTNAME</code>可以通过前面命令获取</p>
+<div class="highlight"><pre><span></span><code>kubectl delete pod PODNAME -n NAMESPACE --force --grace-period<span class="o">=</span><span class="m">0</span> <span class="c1">#删不掉</span>
+kubectl delete deployment DEPLOYMENTNAME -n NAMESPACE <span class="c1">#可以删除Pod</span>
+<span class="c1">### 通过配置文件创建的Pod，需通过配置文件删除</span>
+kubectl apply -f CONFIGFILE
+kubectl delete -f CONFIGFILE
+</code></pre></div>
+<p><code>flannel</code>启动和删除</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f kube-flannel.yml
+kubectl delete -f kube-flannel.yml
+</code></pre></div>
+<p>查看<code>Pod</code>日志：</p>
+<div class="highlight"><pre><span></span><code>kubectl describe pod PODNAME
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="上一页: Index" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              Index
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../%E7%AD%89%E4%BF%9D/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%90%88%E8%A7%84%E5%9F%B9%E8%AE%AD/" class="md-footer__link md-footer__link--next" aria-label="下一页: 信息安全合规培训" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              信息安全合规培训
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.37e9125f.min.js"></script>
+      
+    
+  </body>
+</html>
