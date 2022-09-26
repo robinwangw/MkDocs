@@ -18,7 +18,7 @@ extra:
     language: 'zh'
 
 
-repo_url: https://github.com/robinoneway/MkDocs
+repo_url: https://github.com/robinwangw/MkDocs
 repo_name: Robin's Blog
 
 markdown_extensions:
